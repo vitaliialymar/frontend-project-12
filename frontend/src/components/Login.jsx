@@ -1,45 +1,56 @@
-import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik';
-// import * as yup from 'yup';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useFormik } from 'formik';
+import validator from '../utilites/validator.js';
 
-const Login = () => (
-  <div>
-    <h1>Anywhere in your app!</h1>
-    <Formik
-      initialValues={{ name: '', password: '' }}
-      validate={(values) => {
-        const errors = {};
-        if (!values.name) {
-          errors.name = 'Required';
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.name)
-        ) {
-          errors.name = 'Invalid email address';
-        }
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          // eslint-disable-next-line no-alert
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <Field type="name" name="name" />
-          <ErrorMessage name="name" component="div" />
-          <Field type="password" name="password" />
-          <ErrorMessage name="password" component="div" />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </Form>
-      )}
-    </Formik>
-  </div>
-);
+const onSubmit = () => console.log('submitted');
+
+const Login = () => {
+  const {
+    values, errors, handleChange, handleSubmit,
+  } = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: validator,
+    onSubmit,
+  });
+
+  console.log(errors);
+
+  return (
+    <form onSubmit={handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+      <h1 className="text-center mb-4">Войти</h1>
+      <div className="form-floating mb-3">
+        <input
+          onChange={handleChange}
+          name="username"
+          autoComplete="username"
+          required=""
+          placeholder="Ваш ник"
+          id="username"
+          className="form-control"
+          value={values.username}
+        />
+        <label htmlFor="username">Ваш ник</label>
+      </div>
+      <div className="form-floating mb-4">
+        <input
+          onChange={handleChange}
+          name="password"
+          autoComplete="current-password"
+          required=""
+          placeholder="Пароль"
+          type="password"
+          id="password"
+          className="form-control"
+          value={values.password}
+        />
+        <label htmlFor="password">Пароль</label>
+      </div>
+      <button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+    </form>
+  );
+};
 
 export default Login;
