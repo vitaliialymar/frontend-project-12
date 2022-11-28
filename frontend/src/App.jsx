@@ -1,7 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   BrowserRouter, Route, Routes, Navigate, useLocation,
 } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchDatas } from './slices/dataSlice.js';
 import useAuth from './hooks/index.jsx';
 import AuthContext from './contexts/index.jsx';
 import Layout from './components/Layout.jsx';
@@ -40,25 +42,33 @@ const PrivateRoute = ({ children }) => {
   );
 };
 
-const App = () => (
-  <AuthProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={(
-              <PrivateRoute>
-                <Homepage />
-              </PrivateRoute>
-            )}
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </AuthProvider>
-);
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDatas());
+  }, [dispatch]);
+
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route
+              index
+              element={(
+                <PrivateRoute>
+                  <Homepage />
+                </PrivateRoute>
+              )}
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
 
 export default App;

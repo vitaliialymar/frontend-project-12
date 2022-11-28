@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const res = await axios.post(routes.loginPath(), values);
       localStorage.setItem('token', JSON.stringify(res.data));
-      console.log(localStorage);
+      // console.log(localStorage);
       auth.logIn();
       const { from } = location.state || { from: { pathname: '/' } };
       navigate(from);

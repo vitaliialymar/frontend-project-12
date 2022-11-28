@@ -1,7 +1,16 @@
-// import { useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
+/* import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchDatas } from '../slices/dataSlice.js'; */
+import ChannelsList, { CurrentChannel } from './ChannelsList.jsx';
 
 const Homepage = () => {
+  /* const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDatas());
+  }, [dispatch]); */
+
   const inputV = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -21,16 +30,11 @@ const Homepage = () => {
               <span className="visually-hidden">+</span>
             </Button>
           </div>
-          <ul className="nav flex-column nav-pills nav-fill px-2">
-            <li className="nav-item w-100">тут будут каналы</li>
-          </ul>
+          <ChannelsList />
         </div>
         <div className="col p-0 h-100">
           <div className="d-flex flex-column h-100">
-            <div className="bg-light mb-4 p-3 shadow-sm small">
-              <p className="m-0"><b># название выбранного канала</b></p>
-              <span className="text-muted">количество сообщений</span>
-            </div>
+            <CurrentChannel />
             <div id="messages-box" className="chat-messages overflow-auto px-5 ">
               <p>тут будут выводиться сообщения</p>
               <div className="text-break mb-2">
