@@ -1,9 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   BrowserRouter, Route, Routes, Navigate, useLocation,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchDatas } from './slices/dataSlice.js';
 import useAuth from './hooks/index.jsx';
 import AuthContext from './contexts/index.jsx';
 import Layout from './components/Layout.jsx';
@@ -24,7 +22,20 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(false);
   };
 
-  const value = useMemo(() => ({ loggedIn, logIn, logOut }), [loggedIn]);
+  const getAuthHeader = () => {
+    const userId = JSON.parse(localStorage.getItem('token'));
+    console.log(userId);
+
+    if (userId && userId.token) {
+      return { Authorization: `Bearer ${userId.token}` };
+    }
+
+    return {};
+  };
+
+  const value = useMemo(() => ({
+    loggedIn, logIn, logOut, getAuthHeader,
+  }), [loggedIn]);
 
   return (
     <AuthContext.Provider value={value}>
@@ -42,33 +53,25 @@ const PrivateRoute = ({ children }) => {
   );
 };
 
-const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchDatas());
-  }, [dispatch]);
-
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route
-              index
-              element={(
-                <PrivateRoute>
-                  <Homepage />
-                </PrivateRoute>
+const App = () => (
+  <AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={(
+              <PrivateRoute>
+                <Homepage />
+              </PrivateRoute>
               )}
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
-  );
-};
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
+);
 
 export default App;
