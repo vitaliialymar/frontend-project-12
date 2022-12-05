@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { fetchDatas } from '../slices/channelsSlice.js';
-import useAuth from '../hooks/index.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 import ChannelsList from './ChannelsList.jsx';
 import Chat from './Chat.jsx';
 

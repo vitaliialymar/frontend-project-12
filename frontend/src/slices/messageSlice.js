@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../utilites/routes';
@@ -11,22 +10,24 @@ export const fetchDatas = createAsyncThunk(
   },
 );
 
-const channelsAdapter = createEntityAdapter();
-const initialState = channelsAdapter.getInitialState({ currentChannelId: null });
+const messagesAdapter = createEntityAdapter();
+const initialState = messagesAdapter.getInitialState();
 
-const channelsSlice = createSlice({
-  name: 'data',
+const messagesSlice = createSlice({
+  name: 'messages',
   initialState,
+  reducers: {
+    addMessage: messagesAdapter.addOne,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDatas.fulfilled, (state, { payload }) => {
         console.log(payload);
-        channelsAdapter.addMany(state, payload.channels);
-        state.currentChannelId = payload.currentChannelId;
+        messagesAdapter.addMany(state, payload.messages);
       });
   },
 });
 
-export const { actions } = channelsSlice;
-export const selectors = channelsAdapter.getSelectors((state) => state.channels);
-export default channelsSlice.reducer;
+export const { addMessage } = messagesSlice.actions;
+export const selectors = messagesAdapter.getSelectors((state) => state.messages);
+export default messagesSlice.reducer;

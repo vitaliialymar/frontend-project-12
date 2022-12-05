@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import useAuth from '../hooks/index.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 
 const Layout = () => {
   const { loggedIn, logOut } = useAuth();

@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useRef, useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-import useAuth from '../hooks/index.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 import validator from '../utilites/validator.js';
 import routes from '../utilites/routes.js';
 import loginImage from '../assets/loginImage.jpg';
