@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button, Form,
 } from 'react-bootstrap';
-import { chanelValidator } from '../utilites/validator';
+import * as yup from 'yup';
 import useServerClient from '../hooks/useServerClient.jsx';
 import { hide } from '../slices/modalsSlice.js';
-import { actions } from '../slices/channelsSlice';
+import { selectors, actions } from '../slices/channelsSlice';
 
 const Add = () => {
   const inputRef = useRef();
@@ -32,13 +32,19 @@ const Add = () => {
     addNewChannel(values, responseHandler);
   };
 
+  const channels = useSelector(selectors.selectAll);
+  const channelsNames = channels.map((ch) => ch.name);
+
   const {
-    values, errors, handleChange, handleSubmit,
+    values, errors, touched, handleChange, handleSubmit,
   } = useFormik({
     initialValues: {
       name: '',
     },
-    validationSchema: chanelValidator,
+    validationSchema: yup.object().shape({
+      name: yup.string().required().min(3).max(20)
+        .notOneOf(channelsNames, 'alredy added'),
+    }),
     onSubmit,
   });
 
@@ -57,11 +63,11 @@ const Add = () => {
               value={values.name}
               data-testid="input-body"
               name="name"
-              isInvalid={errors.name}
+              className={errors.name && touched.name ? 'is-invalid form-control' : 'form-control'}
             />
             <Form.Label htmlFor="channelName" className="visually-hidden">Название канала</Form.Label>
             <Form.Control.Feedback type="invalid">
-              {errors.name ? 'От 3 до 20 символов' : null}
+              {errors.name ? errors.name : null}
             </Form.Control.Feedback>
           </FormGroup>
         </Modal.Body>

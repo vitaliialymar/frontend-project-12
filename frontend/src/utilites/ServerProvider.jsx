@@ -15,7 +15,13 @@ const ServerProvider = ({ children }) => {
       dispatch(addMessage(message));
     });
     socket.on('newChannel', (channel) => {
-      dispatch(channelsActions.addChanel(channel));
+      dispatch(channelsActions.addChannel(channel));
+    });
+    socket.on('renameChannel', ({ id, name }) => {
+      dispatch(channelsActions.updateChannel({ id, changes: { name } }));
+    });
+    socket.on('removeChannel', (id) => {
+      dispatch(channelsActions.removeChannel(id));
     });
   }, [dispatch, socket]);
 
@@ -27,8 +33,16 @@ const ServerProvider = ({ children }) => {
     responseHandler(res);
   });
 
+  const renameChannel = (channel, responseHandler) => socket.emit('renameChannel', channel, (res) => {
+    responseHandler(res.status);
+  });
+
+  const removeChannel = (id, responseHandler) => socket.emit('removeChannel', id, (res) => {
+    responseHandler(res.status);
+  });
+
   const value = useMemo(() => ({
-    newMessage, addNewChannel,
+    newMessage, addNewChannel, renameChannel, removeChannel,
   }), []);
 
   return (

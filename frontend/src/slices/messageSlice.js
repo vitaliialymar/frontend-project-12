@@ -1,6 +1,7 @@
 import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../utilites/routes';
+import { actions } from './channelsSlice';
 
 export const fetchDatas = createAsyncThunk(
   'data/fetchData',
@@ -22,9 +23,13 @@ const messagesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchDatas.fulfilled, (state, { payload }) => {
-        console.log(payload);
         messagesAdapter.addMany(state, payload.messages);
       });
+    builder.addCase(actions.removeChannel, (state, { payload }) => {
+      const channelId = payload;
+      const restEntities = Object.values(state.entities).filter((e) => e.id !== channelId);
+      messagesAdapter.setAll(state, restEntities);
+    });
   },
 });
 

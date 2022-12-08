@@ -22,8 +22,9 @@ const Channel = ({ data: { ch, currentChannelId } }) => {
   );
 };
 
-const RemovableChannel = ({ data: { ch, currentChannelId } }) => {
+const RemovableChannel = ({ data: { ch, currentChannelId, showModal } }) => {
   const dispatch = useDispatch();
+
   return (
     <li className="nav-item w-100">
       <div role="group" className="d-flex dropdown btn-group">
@@ -38,8 +39,8 @@ const RemovableChannel = ({ data: { ch, currentChannelId } }) => {
             {ch.name}
           </Button>
           <DropdownButton variant={ch.id === currentChannelId ? 'secondary' : 'light'} as={ButtonGroup} title="" id="bg-nested-dropdown">
-            <Dropdown.Item eventKey="1">Удалить</Dropdown.Item>
-            <Dropdown.Item eventKey="2">Переименовать</Dropdown.Item>
+            <Dropdown.Item eventKey="1" onClick={() => showModal({ type: 'removing', item: ch.id })}>Удалить</Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={() => showModal({ type: 'renaming', item: ch.id })}>Переименовать</Dropdown.Item>
           </DropdownButton>
         </ButtonGroup>
       </div>
@@ -66,7 +67,7 @@ const ChannelsList = () => {
         {channels.map((ch) => (
           ch.removable ? (
             <RemovableChannel
-              data={{ ch, currentChannelId }}
+              data={{ ch, currentChannelId, showModal }}
               key={ch.id}
             />
           ) : (

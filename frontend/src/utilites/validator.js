@@ -5,8 +5,4 @@ const validator = yup.object().shape({
   password: yup.string().required(),
 });
 
-export const chanelValidator = yup.object().shape({
-  name: yup.string().required().min(3).max(20),
-});
-
 export default validator;
