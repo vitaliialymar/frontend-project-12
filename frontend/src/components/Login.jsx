@@ -92,7 +92,7 @@ const Login = () => {
                   <Form.Label htmlFor="password">Пароль</Form.Label>
                   {authFailed && <div className="invalid-tooltip">Неверные имя пользователя или пароль</div>}
                 </Form.Group>
-                <Button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</Button>
+                <Button variant="outline-primary" type="submit" className="w-100 mb-3 btn">Войти</Button>
               </Form>
             </div>
             <div className="card-footer p-4">
