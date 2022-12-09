@@ -6,9 +6,9 @@ const validator = yup.object().shape({
 });
 
 export const signupValidator = yup.object().shape({
-  username: yup.string().required('Обязательное поле').min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов'),
-  password: yup.string().required('Обязательное поле').min(6, 'Не менее 6 символов'),
-  confirmPassword: yup.string().required().oneOf([yup.ref('password')], 'Пароли должны совпадать'),
+  username: yup.string().required('errors.required').min(3, 'errors.name').max(20, 'errors.name'),
+  password: yup.string().required('errors.required').min(6, 'errors.password'),
+  confirmPassword: yup.string().required('errors.required').oneOf([yup.ref('password')], 'errors.confirmPassword'),
 });
 
 export default validator;

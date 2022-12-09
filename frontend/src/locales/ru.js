@@ -1,0 +1,53 @@
+export default {
+  translation: {
+    signupPage: {
+      signup: 'Регистрация',
+      name: 'Имя пользователя',
+      password: 'Пароль',
+      confirmPassword: 'Подтвердите пароль',
+      btn: 'Зарегистрироваться',
+    },
+    loginPage: {
+      footer: 'Нет аккаунта?',
+      name: 'Ваш ник',
+      password: 'Пароль',
+      login: 'Войти',
+    },
+    errorPage: {
+      notFound: 'Страница не найдена',
+      go: 'Но вы можете перейти',
+      home: 'на главную страницу',
+    },
+    logout: 'Выйти',
+    layout: 'Hexlet Chat',
+    channels: {
+      ch: 'Каналы',
+      rename: 'Переименовать',
+      remove: 'Удалить',
+    },
+    chat: {
+      placeholder: 'Введите сообщение...',
+      key_one: '{{count}} сообщение',
+      key_few: '{{count}} сообщения',
+      key_many: '{{count}} сообщений',
+    },
+    modals: {
+      add: 'Добавить канал',
+      remove: 'Удалить канал',
+      rename: 'Переименовать канал',
+      cancel: 'Отменить',
+      send: 'Отправить',
+      delete: 'Удалить',
+      sure: 'Уверены?',
+    },
+    errors: {
+      name: 'От 3 до 20 символов',
+      password: 'Не менее 6 символов',
+      required: 'Обязательное поле',
+      unique: 'Должно быть уникальным',
+      confirmPassword: 'Пароли должны совпадать',
+      login: 'Неверные имя пользователя или пароль',
+      signup: 'Такой пользователь уже существует',
+    },
+  },
+};

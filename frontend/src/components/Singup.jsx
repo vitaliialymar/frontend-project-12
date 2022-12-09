@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useRef, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth.jsx';
@@ -9,6 +10,7 @@ import routes from '../utilites/routes.js';
 import signupImage from '../assets/signup.jpg';
 
 const Signup = () => {
+  const { t } = useTranslation();
   const [isRegistred, setIsRegistred] = useState(false);
   const auth = useAuth();
   const inputRef = useRef();
@@ -57,17 +59,17 @@ const Signup = () => {
           <div className="card shadow-sm">
             <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <img src={signupImage} className="rounded-circle" alt="Регистрация" />
+                <img src={signupImage} className="rounded-circle" alt={t('signupPage.signup')} />
               </div>
               <Form onSubmit={handleSubmit} className="w-50">
-                <h1 className="text-center mb-4">Регистрация</h1>
+                <h1 className="text-center mb-4">{t('signupPage.signup')}</h1>
                 <Form.Group className="form-floating mb-3">
                   <Form.Control
                     onChange={handleChange}
                     name="username"
                     autoComplete="username"
                     required=""
-                    placeholder="От 3 до 20 символов"
+                    placeholder={t('errors.name')}
                     id="username"
                     className={errors.username && touched.username ? 'is-invalid form-control' : 'form-control'}
                     value={values.username}
@@ -75,8 +77,8 @@ const Signup = () => {
                     onBlur={handleBlur}
                     isInvalid={isRegistred}
                   />
-                  {errors.username && touched.username && <div className="invalid-tooltip">{errors.username}</div>}
-                  <Form.Label className="form-label" htmlFor="username">Имя пользователя</Form.Label>
+                  {errors.username && touched.username && <div className="invalid-tooltip">{t(errors.username)}</div>}
+                  <Form.Label className="form-label" htmlFor="username">{t('signupPage.name')}</Form.Label>
                   {isRegistred && <div className="invalid-tooltip" />}
                 </Form.Group>
                 <Form.Group className="form-floating mb-3">
@@ -87,7 +89,7 @@ const Signup = () => {
                     required=""
                     aria-describedby="passwordHelpBlock"
                     aria-autocomplete="list"
-                    placeholder="Не менее 6 символов"
+                    placeholder={t('errors.password')}
                     type="password"
                     id="password"
                     className={errors.password && touched.password ? 'is-invalid form-control' : 'form-control'}
@@ -95,8 +97,8 @@ const Signup = () => {
                     value={values.password}
                     isInvalid={isRegistred}
                   />
-                  {errors.password && touched.password && <div className="invalid-tooltip p-2">{errors.password}</div>}
-                  <Form.Label className="form-label" htmlFor="password">Пароль</Form.Label>
+                  {errors.password && touched.password && <div className="invalid-tooltip p-2">{t(errors.password)}</div>}
+                  <Form.Label className="form-label" htmlFor="password">{t('signupPage.password')}</Form.Label>
                   {isRegistred && <div className="invalid-tooltip" />}
                 </Form.Group>
                 <Form.Group className="form-floating mb-4">
@@ -105,7 +107,7 @@ const Signup = () => {
                     name="confirmPassword"
                     autoComplete="new-password"
                     required=""
-                    placeholder="Пароли должны совпадать"
+                    placeholder={t('errors.confirmPassword')}
                     type="password"
                     id="confirmPassword"
                     className={errors.confirmPassword && touched.confirmPassword && values.password !== '' ? 'is-invalid form-control' : 'form-control'}
@@ -113,11 +115,11 @@ const Signup = () => {
                     value={values.confirmPassword}
                     isInvalid={isRegistred}
                   />
-                  {errors.confirmPassword && touched.confirmPassword && <div className="invalid-tooltip p-2">Пароли должны совпадать</div>}
-                  <Form.Label className="form-label" htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
-                  {isRegistred && <div className="invalid-tooltip">Такой пользователь уже существует</div>}
+                  {errors.confirmPassword && touched.confirmPassword && <div className="invalid-tooltip p-2">{t('errors.confirmPassword')}</div>}
+                  <Form.Label className="form-label" htmlFor="confirmPassword">{t('signupPage.confirmPassword')}</Form.Label>
+                  {isRegistred && <div className="invalid-tooltip">{t('errors.signup')}</div>}
                 </Form.Group>
-                <Button variant="outline-primary" type="submit" className="w-100 btn">Зарегистрироваться</Button>
+                <Button variant="outline-primary" type="submit" className="w-100 btn">{t('signupPage.btn')}</Button>
               </Form>
             </div>
           </div>

@@ -4,15 +4,18 @@ import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button, Form,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import useServerClient from '../hooks/useServerClient.jsx';
 import { hide } from '../slices/modalsSlice.js';
 import { selectors } from '../slices/channelsSlice';
 
 const Rename = () => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
+    inputRef.current.select();
   }, []);
 
   const dispatch = useDispatch();
@@ -33,12 +36,13 @@ const Rename = () => {
 
   const channels = useSelector(selectors.selectAll);
   const channelsNames = channels.map((ch) => ch.name);
+  const currentChannel = channels.find((ch) => ch.id === id);
 
   const {
     values, errors, touched, handleChange, handleSubmit,
   } = useFormik({
     initialValues: {
-      name: '',
+      name: currentChannel.name,
     },
     validationSchema: yup.object().shape({
       name: yup.string().required().min(3).max(20)
@@ -50,7 +54,7 @@ const Rename = () => {
   return (
     <Modal centered show>
       <Modal.Header closeButton onHide={() => dispatch(hide())}>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.rename')}</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
@@ -64,7 +68,7 @@ const Rename = () => {
               name="name"
               className={errors.name && touched.name ? 'is-invalid form-control' : 'form-control'}
             />
-            <Form.Label htmlFor="channelName" className="visually-hidden">Название канала</Form.Label>
+            <Form.Label htmlFor="channelName" className="visually-hidden">{t('modals.rename')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {errors.name ? errors.name : null}
             </Form.Control.Feedback>
@@ -72,10 +76,10 @@ const Rename = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => dispatch(hide())}>
-            Отменить
+            {t('modals.cancel')}
           </Button>
           <Button type="submit" variant="primary">
-            Отправить
+            {t('modals.send')}
           </Button>
         </Modal.Footer>
       </Form>

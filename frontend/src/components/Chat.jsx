@@ -1,12 +1,14 @@
 import { Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { selectors as messagesSelectors } from '../slices/messageSlice.js';
 import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
 import useAuth from '../hooks/useAuth.jsx';
 import useServerClient from '../hooks/useServerClient.jsx';
 
 const CurrentChannel = ({ data: { channelMessages, currentChannelId } }) => {
+  const { t } = useTranslation();
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannel = channels.find(({ id }) => id === currentChannelId);
 
@@ -15,7 +17,7 @@ const CurrentChannel = ({ data: { channelMessages, currentChannelId } }) => {
       <p className="m-0">
         <b>{`# ${currentChannel && currentChannel.name}`}</b>
       </p>
-      <span className="text-muted">{`${channelMessages.length} сообщений`}</span>
+      <span className="text-muted">{t('chat.key', { count: channelMessages.length })}</span>
     </div>
   );
 };
@@ -32,6 +34,7 @@ const MessagesList = ({ data: { channelMessages } }) => (
 );
 
 const Chat = () => {
+  const { t } = useTranslation();
   const { getUsername } = useAuth();
   const { newMessage } = useServerClient();
   const messages = useSelector(messagesSelectors.selectAll);
@@ -82,7 +85,7 @@ const Chat = () => {
                 ref={inputRef}
                 name="body"
                 aria-label="Новое сообщение"
-                placeholder="Введите сообщение..."
+                placeholder={t('chat.placeholder')}
                 className="border-0 p-0 ps-2 form-control"
               />
               <Button onClick={sendMessageHandler} type="submit" variant="outline-secondary" disabled="" className="btn btn-group-vertical">

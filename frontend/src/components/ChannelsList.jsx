@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Button, DropdownButton, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
@@ -24,6 +25,7 @@ const Channel = ({ data: { ch, currentChannelId } }) => {
 
 const RemovableChannel = ({ data: { ch, currentChannelId, showModal } }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <li className="nav-item w-100">
@@ -39,8 +41,8 @@ const RemovableChannel = ({ data: { ch, currentChannelId, showModal } }) => {
             {ch.name}
           </Button>
           <DropdownButton variant={ch.id === currentChannelId ? 'secondary' : 'light'} as={ButtonGroup} title="" id="bg-nested-dropdown">
-            <Dropdown.Item eventKey="1" onClick={() => showModal({ type: 'removing', item: ch.id })}>Удалить</Dropdown.Item>
-            <Dropdown.Item eventKey="2" onClick={() => showModal({ type: 'renaming', item: ch.id })}>Переименовать</Dropdown.Item>
+            <Dropdown.Item eventKey="1" onClick={() => showModal({ type: 'removing', item: ch.id })}>{t('channels.remove')}</Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={() => showModal({ type: 'renaming', item: ch.id })}>{t('channels.rename')}</Dropdown.Item>
           </DropdownButton>
         </ButtonGroup>
       </div>
@@ -49,6 +51,7 @@ const RemovableChannel = ({ data: { ch, currentChannelId, showModal } }) => {
 };
 
 const ChannelsList = () => {
+  const { t } = useTranslation();
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const dispatch = useDispatch();
@@ -58,7 +61,7 @@ const ChannelsList = () => {
   return (
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>Каналы</span>
+        <span>{t('channels.ch')}</span>
         <Button onClick={() => showModal({ type: 'adding', item: null })} variant="outline-primary" size="sm" type="button" className="p-1 text-primary btn btn-group-vertical">
           +
         </Button>

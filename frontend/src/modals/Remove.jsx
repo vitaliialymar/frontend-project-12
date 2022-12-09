@@ -1,10 +1,12 @@
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { hide } from '../slices/modalsSlice.js';
 import { actions } from '../slices/channelsSlice';
 import useServerClient from '../hooks/useServerClient.jsx';
 
 const Remove = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { removeChannel } = useServerClient();
   const id = useSelector((state) => state.modals.item);
@@ -27,16 +29,16 @@ const Remove = () => {
   return (
     <Modal centered show>
       <Modal.Header closeButton onHide={() => dispatch(hide())}>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('modals.remove')}</Modal.Title>
       </Modal.Header>
       <Form onSubmit={removeHandler}>
-        <Modal.Body>Уверены?</Modal.Body>
+        <Modal.Body>{t('modals.sure')}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => dispatch(hide())}>
-            Отменить
+            {t('modals.cancel')}
           </Button>
           <Button type="submit" variant="danger">
-            Удалить
+            {t('modals.delete')}
           </Button>
         </Modal.Footer>
       </Form>

@@ -80,6 +80,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+
   </ServerProvider>
 );
 
