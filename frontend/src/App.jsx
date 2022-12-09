@@ -9,6 +9,7 @@ import ServerProvider from './utilites/ServerProvider.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
 import Login from './components/Login.jsx';
 import Homepage from './components/Homepage.jsx';
+import Signup from './components/Singup.jsx';
 
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('token'));
@@ -72,7 +73,8 @@ const App = () => (
                 </PrivateRoute>
               )}
             />
-            <Route path="/login" element={<Login />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
