@@ -1,5 +1,6 @@
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { hide } from '../slices/modalsSlice.js';
 import { actions } from '../slices/channelsSlice';
@@ -16,7 +17,9 @@ const Remove = () => {
     if (status === 'ok') {
       dispatch(hide());
       dispatch(actions.changeChannel(defaultChannelId));
+      toast.success(t('toast.remove'));
     } else {
+      toast.warn(t('errors.networkError'));
       throw new Error('Network Error!');
     }
   };

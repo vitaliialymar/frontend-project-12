@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button, Form,
@@ -25,7 +26,9 @@ const Add = () => {
     if (res.status === 'ok') {
       dispatch(actions.changeChannel(res.data.id));
       dispatch(hide());
+      toast.success(t('toast.add'));
     } else {
+      toast.warn(t('errors.networkError'));
       throw new Error('Network Error!');
     }
   };

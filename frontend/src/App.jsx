@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import {
   BrowserRouter, Route, Routes, Navigate, useLocation,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import useAuth from './hooks/useAuth.jsx';
 import AuthContext from './contexts/AuthContext.jsx';
 import Layout from './components/Layout.jsx';
@@ -62,6 +63,7 @@ const PrivateRoute = ({ children }) => {
 const App = () => (
   <ServerProvider>
     <AuthProvider>
+      <ToastContainer />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>

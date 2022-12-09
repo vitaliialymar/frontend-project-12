@@ -1,8 +1,8 @@
-import i18next from 'i18next';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import resources from './index.js';
 
-i18next
+i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'ru',
@@ -10,4 +10,4 @@ i18next
     resources,
   });
 
-export default i18next;
+export default i18n;
