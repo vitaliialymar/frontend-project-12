@@ -33,7 +33,12 @@ export default async () => {
   filter.add(filter.getDictionary('fr'));
   filter.add(filter.getDictionary('ru'));
 
-  const root = ReactDOM.createRoot(document.getElementById('root'));
+  const vdom = document.getElementById('root');
+  vdom.classList.add('h-100');
+  document.querySelector('body').classList.add('h-100', 'bg-light');
+  document.querySelector('html').classList.add('h-100');
+
+  const root = ReactDOM.createRoot(vdom);
 
   root.render(
     <React.StrictMode>
