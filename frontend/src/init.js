@@ -11,10 +11,8 @@ import store from './slices/index.js';
 import resources from './locales/index.js';
 import App from './App.jsx';
 
-console.log(process.env.REACT_APP_ROLLBAR_TOKEN);
-
 const rollbarConfig = {
-  accessToken: '3ed680519ea24cb592cccd9c8f531521',
+  accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
   captureUncaught: true,
   captureUnhandledRejections: true,
   payload: {
