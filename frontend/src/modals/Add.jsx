@@ -68,9 +68,10 @@ const Add = () => {
               value={values.name}
               data-testid="input-body"
               name="name"
+              id="name"
               className={errors.name && touched.name ? 'is-invalid form-control' : 'form-control'}
             />
-            <Form.Label htmlFor="channelName" className="visually-hidden">{t('modals.add')}</Form.Label>
+            <Form.Label htmlFor="name" className="visually-hidden">{t('modals.add')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {errors.name ? errors.name : null}
             </Form.Control.Feedback>
