@@ -70,7 +70,6 @@ const Chat = () => {
     console.log(channelMessages);
     console.log(messageState);
     newMessage(messageState, responseHandler);
-    console.log(messages);
   };
 
   return (
@@ -86,7 +85,7 @@ const Chat = () => {
                 value={message}
                 ref={inputRef}
                 name="body"
-                aria-label="Новое сообщение"
+                aria-label={t('chat.new')}
                 placeholder={t('chat.placeholder')}
                 className="border-0 p-0 ps-2 form-control"
               />

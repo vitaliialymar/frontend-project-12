@@ -2,6 +2,7 @@
 import { useEffect, useMemo } from 'react';
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
+import filter from 'leo-profanity';
 import ServerClientContext from '../contexts/ServerClientContext.jsx';
 import { addMessage } from '../slices/messageSlice.js';
 import { actions as channelsActions } from '../slices/channelsSlice.js';
@@ -25,9 +26,10 @@ const ServerProvider = ({ children }) => {
     });
   }, [dispatch, socket]);
 
-  const newMessage = (message, responseHandler) => socket.emit('newMessage', message, (res) => {
-    responseHandler(res.status);
-  });
+  const newMessage = ({ body, channelId, username }, responseHandler) => socket
+    .emit('newMessage', { body: filter.clean(body), channelId, username }, (res) => {
+      responseHandler(res.status);
+    });
 
   const addNewChannel = (channel, responseHandler) => socket.emit('newChannel', channel, (res) => {
     responseHandler(res);
