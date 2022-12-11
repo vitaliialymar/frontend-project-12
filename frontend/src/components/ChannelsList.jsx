@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
-  Button, DropdownButton, Dropdown, ButtonGroup,
+  Button, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
 import { selectors, actions } from '../slices/channelsSlice';
 import { show } from '../slices/modalsSlice';
@@ -29,7 +29,7 @@ const RemovableChannel = ({ data: { ch, currentChannelId, showModal } }) => {
 
   return (
     <li className="nav-item w-100">
-      <ButtonGroup role="group" className="d-flex dropdown">
+      <Dropdown as={ButtonGroup} className="d-flex dropdown">
         <Button
           variant={ch.id === currentChannelId ? 'secondary' : ''}
           className="w-100 rounded-0 text-start text-truncate"
@@ -39,11 +39,16 @@ const RemovableChannel = ({ data: { ch, currentChannelId, showModal } }) => {
           <span className="me-1">#</span>
           {ch.name}
         </Button>
-        <DropdownButton variant={ch.id === currentChannelId ? 'secondary' : ''} as={ButtonGroup} title="" id="bg-nested-dropdown">
+
+        <Dropdown.Toggle split variant={ch.id === currentChannelId ? 'secondary' : ''} id="dropdown-split-basic" className="flex-grow-0">
+          <span className="visually-hidden">{t('channels.control')}</span>
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
           <Dropdown.Item eventKey="1" onClick={() => showModal({ type: 'removing', item: ch.id })}>{t('channels.remove')}</Dropdown.Item>
           <Dropdown.Item eventKey="2" onClick={() => showModal({ type: 'renaming', item: ch.id })}>{t('channels.rename')}</Dropdown.Item>
-        </DropdownButton>
-      </ButtonGroup>
+        </Dropdown.Menu>
+      </Dropdown>
     </li>
   );
 };

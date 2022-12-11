@@ -24,6 +24,7 @@ export default {
       ch: 'Каналы',
       rename: 'Переименовать',
       remove: 'Удалить',
+      control: 'Управление каналом',
     },
     chat: {
       placeholder: 'Введите сообщение...',
