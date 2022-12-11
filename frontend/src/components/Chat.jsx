@@ -67,8 +67,6 @@ const Chat = () => {
       channelId: currentChannelId,
     };
 
-    console.log(channelMessages);
-    console.log(messageState);
     newMessage(messageState, responseHandler);
   };
 
