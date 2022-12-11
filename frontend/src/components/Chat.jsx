@@ -1,6 +1,6 @@
 import { Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { selectors as messagesSelectors } from '../slices/messageSlice.js';

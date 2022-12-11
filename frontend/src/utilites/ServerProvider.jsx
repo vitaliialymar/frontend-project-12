@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import filter from 'leo-profanity';
