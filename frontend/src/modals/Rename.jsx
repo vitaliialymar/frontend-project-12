@@ -72,7 +72,7 @@ const Rename = () => {
               id="name"
               className={errors.name && touched.name ? 'is-invalid form-control' : 'form-control'}
             />
-            <Form.Label htmlFor="name" className="visually-hidden">{t('modals.rename')}</Form.Label>
+            <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {errors.name ? errors.name : null}
             </Form.Control.Feedback>
