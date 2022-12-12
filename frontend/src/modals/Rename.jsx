@@ -48,8 +48,8 @@ const Rename = () => {
       name: currentChannel.name,
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required().min(3).max(20)
-        .notOneOf(channelsNames, 'Должно быть уникальным'),
+      name: yup.string().required('errors.required').min(3, 'errors.name').max(20, 'errors.name')
+        .notOneOf(channelsNames, 'errors.unique'),
     }),
     onSubmit,
   });
@@ -74,7 +74,7 @@ const Rename = () => {
             />
             <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>
             <Form.Control.Feedback type="invalid">
-              {errors.name ? errors.name : null}
+              {errors.name ? t(errors.name) : null}
             </Form.Control.Feedback>
           </FormGroup>
         </Modal.Body>
