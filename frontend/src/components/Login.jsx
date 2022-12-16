@@ -20,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, [isSubmit]);
 
   const onSubmit = async (values) => {
     setAuthFailed(false);
