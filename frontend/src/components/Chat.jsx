@@ -23,14 +23,15 @@ const CurrentChannel = ({ data: { channelMessages, currentChannelId } }) => {
   );
 };
 
-const MessagesList = ({ data: { channelMessages } }) => (
-  <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+const MessagesList = ({ data: { channelMessages, scollToRef } }) => (
+  <div id="messages-box" className="chat-messages overflow-auto px-5">
     {channelMessages.map((message) => (
       <div key={message.id} className="text-break mb-2">
         <b>{message.username}</b>
         {`: ${message.body}`}
       </div>
     ))}
+    <div ref={scollToRef} />
   </div>
 );
 
@@ -45,8 +46,11 @@ const Chat = () => {
   const [message, setMessage] = useState('');
 
   const inputRef = useRef();
+  const scollToRef = useRef();
+
   useEffect(() => {
     inputRef.current.focus();
+    scollToRef.current.scrollIntoView();
   });
 
   const responseHandler = (status) => {
@@ -74,7 +78,7 @@ const Chat = () => {
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
         <CurrentChannel data={{ channelMessages, currentChannelId }} />
-        <MessagesList data={{ channelMessages }} />
+        <MessagesList data={{ channelMessages, scollToRef }} />
         <div className="mt-auto px-5 py-3">
           <Form noValidate="" className="py-1 border rounded-2">
             <Form.Group className="input-group has-validation">

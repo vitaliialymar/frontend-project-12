@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
@@ -13,6 +13,9 @@ import { selectors } from '../slices/channelsSlice';
 
 const Rename = () => {
   const { t } = useTranslation();
+
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -34,6 +37,7 @@ const Rename = () => {
   };
 
   const onSubmit = (values) => {
+    setIsSubmit(true);
     renameChannel({ id, ...values }, responseHandler);
   };
 
@@ -60,32 +64,34 @@ const Rename = () => {
         <Modal.Title>{t('modals.rename')}</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
-        <Modal.Body>
-          <FormGroup>
-            <FormControl
-              required
-              ref={inputRef}
-              onChange={handleChange}
-              value={values.name}
-              data-testid="input-body"
-              name="name"
-              id="name"
-              className={errors.name && touched.name ? 'is-invalid form-control' : 'form-control'}
-            />
-            <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>
-            <Form.Control.Feedback type="invalid">
-              {errors.name ? t(errors.name) : null}
-            </Form.Control.Feedback>
-          </FormGroup>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => dispatch(hide())}>
-            {t('modals.cancel')}
-          </Button>
-          <Button type="submit" variant="primary">
-            {t('modals.send')}
-          </Button>
-        </Modal.Footer>
+        <fieldset disabled={isSubmit}>
+          <Modal.Body>
+            <FormGroup>
+              <FormControl
+                required
+                ref={inputRef}
+                onChange={handleChange}
+                value={values.name}
+                data-testid="input-body"
+                name="name"
+                id="name"
+                className={errors.name && touched.name ? 'is-invalid form-control' : 'form-control'}
+              />
+              <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>
+              <Form.Control.Feedback type="invalid">
+                {errors.name ? t(errors.name) : null}
+              </Form.Control.Feedback>
+            </FormGroup>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => dispatch(hide())}>
+              {t('modals.cancel')}
+            </Button>
+            <Button type="submit" variant="primary">
+              {t('modals.send')}
+            </Button>
+          </Modal.Footer>
+        </fieldset>
       </Form>
     </Modal>
   );

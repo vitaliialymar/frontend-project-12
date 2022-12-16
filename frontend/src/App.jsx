@@ -75,8 +75,8 @@ const App = () => (
                 </PrivateRoute>
               )}
             />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>

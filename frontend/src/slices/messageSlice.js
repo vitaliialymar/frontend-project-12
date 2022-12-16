@@ -3,7 +3,7 @@ import axios from 'axios';
 import routes from '../utilites/routes';
 import { actions } from './channelsSlice';
 
-export const fetchDatas = createAsyncThunk(
+const fetchDatas = createAsyncThunk(
   'data/fetchData',
   async (header) => {
     const { data } = await axios.get(routes.dataPath(), { headers: header });

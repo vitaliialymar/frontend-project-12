@@ -11,6 +11,7 @@ import loginImage from '../assets/loginImage.jpg';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const auth = useAuth();
   const inputRef = useRef();
   const location = useLocation();
@@ -19,10 +20,11 @@ const Login = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  });
 
   const onSubmit = async (values) => {
     setAuthFailed(false);
+    setIsSubmit(true);
     try {
       const res = await axios.post(routes.loginPath(), values);
       localStorage.setItem('token', JSON.stringify(res.data));
@@ -60,39 +62,41 @@ const Login = () => {
                 <img src={loginImage} className="rounded-circle" alt={t('loginPage.login')} />
               </div>
               <Form onSubmit={handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">{t('loginPage.login')}</h1>
-                <Form.Group className="form-floating mb-3">
-                  <Form.Control
-                    onChange={handleChange}
-                    name="username"
-                    autoComplete="username"
-                    required=""
-                    placeholder={t('loginPage.name')}
-                    id="username"
-                    className="form-control"
-                    value={values.username}
-                    isInvalid={authFailed}
-                    ref={inputRef}
-                  />
-                  <Form.Label htmlFor="username">{t('loginPage.name')}</Form.Label>
-                </Form.Group>
-                <Form.Group className="form-floating mb-4">
-                  <Form.Control
-                    onChange={handleChange}
-                    name="password"
-                    autoComplete="current-password"
-                    required=""
-                    placeholder={t('loginPage.password')}
-                    type="password"
-                    id="password"
-                    className="form-control"
-                    value={values.password}
-                    isInvalid={authFailed}
-                  />
-                  <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
-                  {authFailed && <div className="invalid-tooltip">{t('errors.login')}</div>}
-                </Form.Group>
-                <Button variant="outline-primary" type="submit" className="w-100 mb-3 btn">{t('loginPage.login')}</Button>
+                <fieldset disabled={isSubmit}>
+                  <h1 className="text-center mb-4">{t('loginPage.login')}</h1>
+                  <Form.Group className="form-floating mb-3">
+                    <Form.Control
+                      onChange={handleChange}
+                      name="username"
+                      autoComplete="username"
+                      required=""
+                      placeholder={t('loginPage.name')}
+                      id="username"
+                      className="form-control"
+                      value={values.username}
+                      isInvalid={authFailed}
+                      ref={inputRef}
+                    />
+                    <Form.Label htmlFor="username">{t('loginPage.name')}</Form.Label>
+                  </Form.Group>
+                  <Form.Group className="form-floating mb-4">
+                    <Form.Control
+                      onChange={handleChange}
+                      name="password"
+                      autoComplete="current-password"
+                      required=""
+                      placeholder={t('loginPage.password')}
+                      type="password"
+                      id="password"
+                      className="form-control"
+                      value={values.password}
+                      isInvalid={authFailed}
+                    />
+                    <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
+                    {authFailed && <div className="invalid-tooltip">{t('errors.login')}</div>}
+                  </Form.Group>
+                  <Button variant="outline-primary" type="submit" className="w-100 mb-3 btn">{t('loginPage.login')}</Button>
+                </fieldset>
               </Form>
             </div>
             <div className="card-footer p-4">
