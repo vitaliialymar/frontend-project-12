@@ -5,24 +5,23 @@ import routes from '../utilites/routes';
 
 export const fetchDatas = createAsyncThunk(
   'data/fetchData',
-  async (header, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(routes.dataPath(), { headers: header });
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response.status);
-    }
+  async (header) => {
+    const { data } = await axios.get(routes.dataPath(), { headers: header });
+    return data;
   },
 );
 
 const defaultChannelId = 1;
 const channelsAdapter = createEntityAdapter();
-const initialState = channelsAdapter.getInitialState({ currentChannelId: null });
+const initialState = channelsAdapter.getInitialState({ currentChannelId: null, error: null });
 
 const channelsSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
+    removeError: (state) => {
+      state.error = null;
+    },
     changeChannel: (state, { payload }) => {
       state.currentChannelId = payload;
     },
@@ -40,10 +39,9 @@ const channelsSlice = createSlice({
       .addCase(fetchDatas.fulfilled, (state, { payload }) => {
         channelsAdapter.addMany(state, payload.channels);
         state.currentChannelId = payload.currentChannelId;
-        state.error = null;
       })
-      .addCase(fetchDatas.rejected, (state, { payload }) => {
-        state.error = payload;
+      .addCase(fetchDatas.rejected, (state, { error }) => {
+        state.error = error.message;
       });
   },
 });

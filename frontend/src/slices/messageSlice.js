@@ -1,15 +1,5 @@
-import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import routes from '../utilites/routes';
-import { actions } from './channelsSlice';
-
-const fetchDatas = createAsyncThunk(
-  'data/fetchData',
-  async (header) => {
-    const { data } = await axios.get(routes.dataPath(), { headers: header });
-    return data;
-  },
-);
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { actions, fetchDatas } from './channelsSlice';
 
 const messagesAdapter = createEntityAdapter();
 const initialState = messagesAdapter.getInitialState();

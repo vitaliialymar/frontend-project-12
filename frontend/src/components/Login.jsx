@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useRef, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
@@ -8,11 +9,13 @@ import useAuth from '../hooks/useAuth.jsx';
 import validator from '../utilites/validator.js';
 import routes from '../utilites/routes.js';
 import loginImage from '../assets/loginImage.jpg';
+import { actions } from '../slices/channelsSlice.js';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const auth = useAuth();
+  const dispatch = useDispatch();
   const inputRef = useRef();
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,7 +23,8 @@ const Login = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [isSubmit]);
+    dispatch(actions.removeError());
+  }, [isSubmit, dispatch]);
 
   const onSubmit = async (values) => {
     setAuthFailed(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,8 @@ import useAuth from '../hooks/useAuth.jsx';
 const Layout = () => {
   const { loggedIn, logOut } = useAuth();
   const { t } = useTranslation();
-  const { error } = useSelector((state) => state.channels);
+  // const { error } = useSelector((state) => state.channels);
+
   return (
     <div className="h-100">
       <div className="h-100" id="chat">
@@ -19,7 +20,6 @@ const Layout = () => {
               {loggedIn && <Button onClick={() => logOut()} type="submit" className="btn-primary">{t('logout')}</Button>}
             </div>
           </nav>
-          {error && <h4 className="d-flex align-items-center flex-column text-danger">{t('errors.unauthorized')}</h4>}
           <Outlet />
         </div>
       </div>
