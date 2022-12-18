@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +7,6 @@ import useAuth from '../hooks/useAuth.jsx';
 const Layout = () => {
   const { loggedIn, logOut } = useAuth();
   const { t } = useTranslation();
-  // const { error } = useSelector((state) => state.channels);
 
   return (
     <div className="h-100">
